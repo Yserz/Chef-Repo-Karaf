@@ -40,8 +40,6 @@ remote_file cached_package_filename do
 end
 
 ## Unpack Karaf into base-dir and set rights to karaf-admin
-# TODO set rights for bin-folder of karaf
-# chmod -R 0770 #{node['karaf']['base_dir']}/bin/
 bash 'unpack_karaf' do
   not_if { check_proc.call }
   code <<-EOF
@@ -54,5 +52,6 @@ bash 'unpack_karaf' do
   mv apache-karaf-3.0.0.RC1 #{node['karaf']['base_dir']}
   chown -R #{node['karaf']['user']} #{node['karaf']['base_dir']}
   chgrp -R #{node['karaf']['group']} #{node['karaf']['base_dir']}
+  chmod -R 0770 #{node['karaf']['base_dir']}/bin/
   EOF
 end
